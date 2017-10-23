@@ -141,7 +141,7 @@ public class SaveSensorFragment extends Fragment implements OnMapReadyCallback {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            Log.e("1","1");
+            Log.e("1","1" );
          /*   mGoogleMap.setMyLocationEnabled(true);
             Log.e("1","2");
             Criteria criteria = new Criteria();

@@ -142,7 +142,7 @@ public class SaveSensorFragment extends Fragment implements OnMapReadyCallback {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             Log.e("1","1");
-            mGoogleMap.setMyLocationEnabled(true);
+         /*   mGoogleMap.setMyLocationEnabled(true);
             Log.e("1","2");
             Criteria criteria = new Criteria();
             LocationManager locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
@@ -155,7 +155,7 @@ public class SaveSensorFragment extends Fragment implements OnMapReadyCallback {
             LatLng myPosition = new LatLng(latitude, longitude);
 
             mGoogleMap.addMarker(new MarkerOptions().position(myPosition).title("Marker"));
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));*/
 
             return;
         }

@@ -4,11 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.jose.swaroopwork.R;
+import com.example.jose.swaroopwork.adapters.AddSensorAdapter;
+import com.example.jose.swaroopwork.interfaces.CustomClickListner;
+import com.example.jose.swaroopwork.model.SensorAdd;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,10 @@ public class AddSensorFragment extends Fragment {
     private String mParam2;
 
     View mView;
+    private RecyclerView recyclerViewAddSensor;
+    private RecyclerView.LayoutManager mlayoutManager;
+    List<SensorAdd> sensorAddList = new ArrayList<>();
+    AddSensorAdapter addSensorAdapter ;
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,7 +80,42 @@ public class AddSensorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_add_sensor, container, false);
+        initialise();
+        sensorAddInit();
         return mView;
+    }
+
+    private void sensorAddInit() {
+      SensorAdd  sensorAdd = new SensorAdd("first",1);
+        sensorAddList.add(sensorAdd);
+        sensorAdd = new SensorAdd("second",2);
+        sensorAddList.add(sensorAdd);
+        sensorAdd = new SensorAdd("Third",3);
+        sensorAddList.add(sensorAdd);
+        sensorAdd = new SensorAdd("Forth",4);
+        sensorAddList.add(sensorAdd);
+        sensorAdd = new SensorAdd("Fifth",5);
+        sensorAddList.add(sensorAdd);
+        sensorAdd = new SensorAdd("Sixth",6);
+        sensorAddList.add(sensorAdd);
+        sensorAdd = new SensorAdd("Seventh",7);
+        sensorAddList.add(sensorAdd);
+        addSensorAdapter.notifyDataSetChanged();
+    }
+
+    private void initialise() {
+        recyclerViewAddSensor = (RecyclerView)mView.findViewById(R.id.recycler_add_sensor);
+        mlayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        recyclerViewAddSensor.setLayoutManager(mlayoutManager);
+        recyclerViewAddSensor.setHasFixedSize(true);
+        addSensorAdapter = new AddSensorAdapter(new CustomClickListner() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+
+            }
+        },sensorAddList,getActivity());
+        recyclerViewAddSensor.setAdapter(addSensorAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

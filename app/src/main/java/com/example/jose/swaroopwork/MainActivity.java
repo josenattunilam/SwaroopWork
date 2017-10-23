@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import com.example.jose.swaroopwork.fragments.AddSensorFragment;
 import com.example.jose.swaroopwork.fragments.HomeFragment;
 import com.example.jose.swaroopwork.fragments.SaveSensorFragment;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFragment.OnFragmentInteractionListener,AddSensorFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFragment.OnFragmentInteractionListener,AddSensorFragment.OnFragmentInteractionListener,SaveSensorFragment.OnFragmentInteractionListener {
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -72,5 +73,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+    public void switchContent(int id, Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(id, fragment, fragment.toString());
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

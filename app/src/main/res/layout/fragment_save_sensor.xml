@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jose.swaroopwork.fragments.SaveSensorFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="2"
+    android:orientation="vertical">
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView_save_sensor"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+    </com.google.android.gms.maps.MapView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background">
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edt_sens_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sensor name or title"
+                    android:textColorHint="@color/textcolor"/>
+                <EditText
+                    android:id="@+id/edt_sens_digit_id"
+                    android:layout_below="@+id/edt_sens_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Unique digital number"
+                    android:textColorHint="@color/textcolor"/>
+                <EditText
+                    android:id="@+id/edt_lattitude"
+                    android:layout_below="@+id/edt_sens_digit_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lattitude"
+                    android:textColorHint="@color/textcolor"/>
+                <EditText
+                    android:id="@+id/edt_longitude"
+                    android:layout_below="@+id/edt_lattitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Longitude"
+                    android:textColorHint="@color/textcolor"/>
+                <Button
+
+                    android:id="@+id/btn_save_sensor"
+                    android:layout_below="@+id/edt_longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:background="@color/buttoncolor"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"/>
+
+            </RelativeLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+
+
+</FrameLayout>

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.jose.swaroopwork.fragments.AddSensorFragment;
 import com.example.jose.swaroopwork.fragments.HomeFragment;
+import com.example.jose.swaroopwork.fragments.SaveSensorFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,HomeFragment.OnFragmentInteractionListener,AddSensorFragment.OnFragmentInteractionListener {
     private BottomNavigationView bottomNavigationView;

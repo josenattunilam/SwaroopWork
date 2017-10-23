@@ -1,4 +1,4 @@
-package com.example.jose.swaroopwork;
+package com.example.jose.swaroopwork.model;
 
 import com.google.android.gms.maps.model.LatLng;
 

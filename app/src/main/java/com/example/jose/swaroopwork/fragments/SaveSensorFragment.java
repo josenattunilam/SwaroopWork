@@ -1,15 +1,21 @@
 package com.example.jose.swaroopwork.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.jose.swaroopwork.model.ModelLatLog;
 import com.example.jose.swaroopwork.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,21 +23,20 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-import java.util.List;
+import static android.content.Context.LOCATION_SERVICE;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link SaveSensorFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link SaveSensorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnMapReadyCallback{
+public class SaveSensorFragment extends Fragment implements OnMapReadyCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -44,11 +49,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     View mView;
     GoogleMap mGoogleMap;
     MapView mMapView;
-    private List<ModelLatLog> latLogList = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
-    public HomeFragment() {
+    public SaveSensorFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +62,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment SaveSensorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static SaveSensorFragment newInstance(String param1, String param2) {
+        SaveSensorFragment fragment = new SaveSensorFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,46 +86,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         // Inflate the layout for this fragment
-        mView= inflater.inflate(R.layout.fragment_home, container, false);
-
+        mView = inflater.inflate(R.layout.fragment_save_sensor, container, false);
         return mView;
-    }
-
-    @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mMapView = (MapView)mView.findViewById(R.id.mapView);
-        if (mMapView != null){
-            mMapView.onCreate(null);
-            mMapView.onResume();
-            mMapView.getMapAsync(this);
-            LatLondAdd();
-        }
-    }
-
-    private void LatLondAdd() {
-        ModelLatLog modelLatLog = new ModelLatLog(-34,155,"first");
-        latLogList.add(modelLatLog);
-        modelLatLog = new ModelLatLog(-34,158,"second");
-        latLogList.add(modelLatLog);
-        modelLatLog = new ModelLatLog(-34,160,"third");
-        latLogList.add(modelLatLog);
-        modelLatLog = new ModelLatLog(-34,165,"forth");
-        latLogList.add(modelLatLog);
-        modelLatLog = new ModelLatLog(-34,170,"fifth");
-        latLogList.add(modelLatLog);
-        modelLatLog = new ModelLatLog(-34,180,"sixth");
-        latLogList.add(modelLatLog);
-        Log.e("hello","worked");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mMapView = (MapView) mView.findViewById(R.id.mapView_save_sensor);
+        if (mMapView != null) {
+            mMapView.onCreate(null);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+
         }
     }
 
@@ -145,32 +130,39 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
-        Log.e("hello","worked2");
+        Log.e("hello", "worked2");
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        for(int i = 0 ; i < latLogList.size() ; i++ ) {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            Log.e("1","1");
+            mGoogleMap.setMyLocationEnabled(true);
+            Log.e("1","2");
+            Criteria criteria = new Criteria();
+            LocationManager locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.e("1","2");
 
-            createMarker(latLogList.get(i).getLattitude(), latLogList.get(i).getLongitude(), latLogList.get(i).getTitle());
-            Log.e("hello", String.valueOf(i));
+            LatLng myPosition = new LatLng(latitude, longitude);
+
+            mGoogleMap.addMarker(new MarkerOptions().position(myPosition).title("Marker"));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
+
+            return;
         }
 
-        // Add a marker in Sydney and move the camera
-      /*  LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));*/
-        LatLng sydney = new LatLng(latLogList.get(1).getLattitude(),latLogList.get(1).getLongitude());
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
     }
 
-    protected Marker createMarker(double latitude, double longitude, String title) {
-
-        return mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(latitude, longitude))
-                .anchor(0.5f, 0.5f)
-                .title(title));
-
-
-    }
 
 
     /**
